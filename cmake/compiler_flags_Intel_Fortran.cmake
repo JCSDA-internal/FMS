@@ -1,12 +1,13 @@
-# (C) Copyright 2018-2020 UCAR.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+# Precision-based Fortran compiler flags
+set(r4_flags "-real-size 32") # Fortran flags for 32BIT precision
+set(r8_flags "-real-size 64") # Fortran flags for 64BIT precision
+set(r8_flags "${r8_flags} -no-prec-div -no-prec-sqrt")
 
-# Redefine the ecbuild defaults but without -heap-arrays 32
-set( CMAKE_Fortran_FLAGS_RELEASE        "-O3 -DNDEBUG -unroll -inline " )
-set( CMAKE_Fortran_FLAGS_RELWITHDEBINFO "-O2 -g -DNDEBUG "              )
-set( CMAKE_Fortran_FLAGS_BIT            "-O2 -DNDEBUG -unroll -inline " )
-set( CMAKE_Fortran_FLAGS_DEBUG          "-O0 -g -traceback -check all " )
-set( CMAKE_Fortran_FLAGS_PRODUCTION     "-O3 -g "                       )
+# Intel Fortan
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fpp -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -align array64byte -nowarn -sox -traceback")
 
+set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -debug minimal -fp-model source -nowarn -qoverride-limits -qno-opt-dynamic-align -qopt-prefetch=3")
+
+set(CMAKE_Fortran_FLAGS_DEBUG "-g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv")
+
+set(CMAKE_Fortran_LINK_FLAGS "")
